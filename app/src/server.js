@@ -304,7 +304,7 @@ async function start() {
   try {
     await migrateDatabase();
     await q('SELECT 1');
-    app.listen(port, () => console.log(Klicto PostgreSQL backend listening on ${port}));
+    app.listen(port, () => console.log('Klicto backend running'));
   } catch (err) {
     console.error('Fatal startup error:', err);
     process.exit(1);
