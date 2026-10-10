@@ -53,7 +53,7 @@ async function migrateDatabase(){
     } catch (e) {
       console.log('Platform owner bootstrap note:', e.message);
     }
-console.log(Database ready; ${templates.length} templates synced);
+console.log('Database ready');
     }
 
     async function auth(req, res, next) {'});req.user=jwt.verify(h.slice(7),SECRET);next()}catch(e){res.status(401).json({error:'Invalid or expired session'})}}
