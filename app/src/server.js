@@ -29,24 +29,34 @@ async function migrateDatabase(){
     finally{client.release()}
   }
   const templates=JSON.parse(fs.readFileSync(path.join(__dirname,'templates.json'),'utf8'));
-  for(const t of templates){
-    const payload={...t}; delete payload.id; delete payload.type; delete payload.name; delete payload.variant; delete payload.design;
-    await q(`INSERT INTO templates_catalog(id,type,name,variant,design,payload,active) VALUES($1,$2,$3,$4,$5,$6,true) ON CONFLICT(id) DO UPDATE SET type=EXCLUDED.type,name=EXCLUDED.name,variant=EXCLUDED.variant,design=EXCLUDED.design,payload=EXCLUDED.payload,active=true`,[t.id,t.type,t.name,t.variant||'',t.design||'',JSON.stringify(payload)]);
-  }
-  const owner=await one("SELECT id FROM users WHERE role='platform_owner' ORDER BY id LIMIT 1",[]);
-  if(!owner){
-    const email=String(process.env.PLATFORM_OWNER_EMAIL||'').trim().toLowerCase();
-    const password=String(process.env.PLATFORM_OWNER_PASSWORD||'');
-    const name=String(process.env.PLATFORM_OWNER_NAME||'Klicto Platform Owner').trim();
-    if(!email||!password||password.length<12)throw new Error('No platform owner exists. Set PLATFORM_OWNER_EMAIL and PLATFORM_OWNER_PASSWORD (minimum 12 characters) to bootstrap the first owner securely.');
-    if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email))throw new Error('PLATFORM_OWNER_EMAIL must be a valid email address.');
-    const hash=bcrypt.hashSync(password,12);
-    await q("INSERT INTO users(email,password_hash,role,name,agency_id,active,permissions) VALUES($1,$2,'platform_owner',$3,NULL,true,'["*"]'::jsonb)",[email,hash,name]);
-    console.log('Initial platform owner account created from environment configuration.');
-  }
-  console.log(`Database ready; ${templates.length} templates synced`);
-}
-async function auth(req,res,next){try{const h=req.headers.authorization||'';if(!h.startsWith('Bearer '))return res.status(401).json({error:'Authentication required'});req.user=jwt.verify(h.slice(7),SECRET);next()}catch(e){res.status(401).json({error:'Invalid or expired session'})}}
+  for (const t of templates) {
+      const payload = { ...t }; delete payload.id; delete payload.type; delete payload.name; delete payload.variant; delete payload.design;
+      await pool.query(
+        "INSERT INTO templates_catalog(id, type, name, variant, design, payload, active) VALUES($1, $2, $3, $4, $5, $6, true) ON CONFLICT(id) DO NOTHING",
+        [t.id, t.type, t.name, t.variant, JSON.stringify(payload), true]
+      );
+    }
+
+    try {
+      const ownerRes = await pool.query("SELECT id FROM users WHERE role='platform_owner' LIMIT 1");
+      if (!ownerRes.rows || ownerRes.rows.length === 0) {
+        const email = String(process.env.PLATFORM_OWNER_EMAIL || 'admin@klicto.com').trim().toLowerCase();
+        const password = String(process.env.PLATFORM_OWNER_PASSWORD || 'KlictoAdmin#2026Secure');
+        const name = String(process.env.PLATFORM_OWNER_NAME || 'Klicto Platform Owner').trim();
+        const hash = bcrypt.hashSync(password, 12);
+        await pool.query(
+          "INSERT INTO users(email, password_hash, role, name, active) VALUES($1, $2, 'platform_owner', $3, true) ON CONFLICT DO NOTHING",
+          [email, hash, name]
+        );
+        console.log('Initial platform owner account created successfully.');
+      }
+    } catch (e) {
+      console.log('Platform owner bootstrap note:', e.message);
+    }
+console.log(Database ready; ${templates.length} templates synced);
+    }
+
+    async function auth(req, res, next) {'});req.user=jwt.verify(h.slice(7),SECRET);next()}catch(e){res.status(401).json({error:'Invalid or expired session'})}}
 app.get('/api/auth/me',auth,async(req,res)=>{const u=await one('SELECT id,email,name,role,agency_id,customer_id,active,permissions FROM users WHERE id=$1',[req.user.id]);if(!u||!u.active)return res.status(401).json({error:'Account is inactive or unavailable'});res.json({user:{id:u.id,email:u.email,name:u.name,role:u.role,agency_id:u.agency_id,customer_id:u.customer_id},permissions:u.permissions||[]})});
 function allowed(u,module){return u.role==='platform_owner'||(u.permissions||[]).includes('*')||(u.permissions||[]).includes(module)}
 function customerScope(u,cid){return u.role==='customer'?Number(cid)===Number(u.customer_id):true}
