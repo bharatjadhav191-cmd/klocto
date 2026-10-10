@@ -1,0 +1,68 @@
+APEXJOV MEDIA — V76 CONSOLIDATED PC TESTING CHECKLIST
+Use dummy data only. This is a local testing build, not production.
+
+LOGIN / OWNER CONTROL
+[ ] Login owner@apexjov.test / owner123
+[ ] Owner sees all modules, including separate Plans & Pricing
+[ ] Settings: assign/remove module permissions for a test user
+[ ] Reset a test user's password (minimum 8 characters)
+
+CUSTOMER / REFERRAL
+[ ] Add a customer with unique email/mobile and a valid referral code
+[ ] Confirm coupon is credited to the EXISTING referrer, not the new customer
+[ ] Try duplicate email, duplicate mobile, or both; entry must be rejected
+[ ] Edit an existing customer without creating a duplicate
+[ ] Confirm customer has a Referral Code and Coupon Balance
+[ ] Use an existing referrer's coupon on a new invoice
+
+AGENCY / TENANT
+[ ] Add an agency with logo, owner name/email/mobile, state/city, plan and referral code
+[ ] Confirm duplicate owner email/mobile is rejected
+[ ] Confirm referral benefit goes to existing referrer
+[ ] Edit agency and owner profile
+[ ] Check separate Plans & Pricing main sidebar item
+
+PLANS & PRICING
+[ ] Add/edit a main category
+[ ] Add/edit/deactivate a plan within a category
+[ ] Check Meta Ads, Google Ads, Website Design, Rented Portal, Tenant/Agency categories
+[ ] Confirm plans are not nested under Agency/Tenant menu
+
+CRM / OPERATIONS
+[ ] Add/edit/delete Sales record
+[ ] Add/edit/delete Operations record
+[ ] Add/edit/delete Inbox record
+[ ] Add/edit/delete Calendar event
+[ ] Add/edit/delete Task
+[ ] Change lead stage; confirm stage history appears in lead details
+[ ] Add a lead comment and reopen details to confirm it persists
+
+FORMS / WEBSITES
+[ ] Create form with background image upload
+[ ] Add multiple choice question with 3+ options
+[ ] Create a multi-page website and confirm pages appear
+[ ] Use a website template and confirm Home/About/Services/Portfolio/Testimonials/Contact pages are defined
+[ ] Test form/funnel public links separately; do not assume custom domain is live
+
+FINANCE / REPORTS
+[ ] Create a professional invoice; print and choose Save as PDF
+[ ] Create a partial payment linked to an invoice; confirm Partial Paid and remaining balance
+[ ] Record final payment; confirm invoice becomes Paid and outstanding is zero
+[ ] Print/save payment receipt PDF
+[ ] Open Ledger, filter by account, print/save PDF
+[ ] Add/edit/delete an expense
+[ ] Check outstanding report and reports summary
+[ ] Check coupon is not double-counted in ledger
+
+TOOLS
+[ ] Chatbot settings open/save without remaining on Loading
+[ ] Add/edit/delete SEO record
+[ ] Add/edit/delete domain record; manually set DNS/SSL/hosting status
+[ ] Add/edit/delete notification and mark as read
+[ ] Check referral event and coupon credit history
+
+PRODUCTION INTEGRATIONS (NOT LIVE IN THIS BUILD)
+[ ] DNS / SSL / Hosting must be connected to real providers
+[ ] Live domain publishing needs server/hosting setup
+[ ] Paytm, Meta, WhatsApp and AI need credentials and backend verification
+[ ] Test tenant/customer data isolation with separate accounts before production

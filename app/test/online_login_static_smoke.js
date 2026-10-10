@@ -1,0 +1,10 @@
+const fs = require('fs');
+const assert = require('assert');
+const html = fs.readFileSync('public/index.html','utf8');
+const server = fs.readFileSync('src/server.js','utf8');
+assert(html.includes("api('/auth/login',{method:'POST'"), 'online login must authenticate against backend');
+assert(html.includes("api('/auth/me')"), 'saved online sessions must be verified against backend');
+assert(html.includes('if(!OFFLINE&&!TRAINING_MODE)'), 'hosted training mode must keep browser-local training data isolated');
+assert(html.includes("if(token){boot();}"), 'online saved sessions must be restored');
+assert(server.includes("app.get('/api/auth/me',auth"), 'backend must expose authenticated session endpoint');
+console.log('PASS — online login uses PostgreSQL-backed API and restores JWT sessions');

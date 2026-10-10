@@ -1,0 +1,24 @@
+APEXJOV V72 — TENANT / WHITE-LABEL TESTING
+
+Use demo/testing data only. This package is not a live production deployment.
+
+1) Login as Platform Owner: owner@apexjov.test / owner123
+2) Open Agencies / Tenants. Confirm only Platform Owner sees this menu.
+3) Add Agency. Enter registered name, portal display name, optional logo URL, preferred subdomain label, plan/status, and first Agency Admin name/email/password (8+ characters).
+4) Confirm agency card shows the agency display name, registered name, plan, status and tenant ID.
+5) Manage agency, edit display name/logo/subdomain label/plan/status, save, and reopen to confirm persistence.
+6) Test duplicate admin email and short password validation.
+7) Logout. Login with newly created Agency Admin credentials. Confirm the agency branding appears in the header in offline demo mode and Platform Owner-only Agencies menu is hidden.
+8) Agency Admin: Settings → Add User. Create Agency Staff, Sales Executive and Customer test users. Confirm their agency_id/workspace stays tied to this tenant.
+9) Add test customers and leads under the tenant. Check a second agency does not see the first agency's records when testing with separate tenant accounts. Report any cross-tenant visibility immediately.
+10) Test editing agency branding and re-login.
+
+IMPORTANT LIMITATIONS
+- Preferred subdomain is only a test label; it does not create DNS, hosting or SSL.
+- Logo is entered as a URL in this tenant form; actual upload/storage needs the media storage service.
+- Offline HTML mode uses browser localStorage and is for UI workflow testing only. Production tenant isolation must be verified against a configured backend/database.
+- Do not use real customer data or real payment credentials.
+
+Bug report format: Module / Steps / Expected / Actual / Device / Screenshot. Collect all issues before requesting a consolidated fix.
+
+V73 note: Agency logo must be uploaded as PNG/JPG/WebP (max 500 KB); no logo URL field is required. Test create, preview, save, reopen, and replace logo. Gemini's other suggestions remain backlog and are not all included in this build.

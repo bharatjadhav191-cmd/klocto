@@ -1,0 +1,33 @@
+APEXJOV MEDIA — V77 TEAM ROLE TEST CHECKLIST
+Use dummy data only. Not production-ready.
+
+PLATFORM OWNER
+[ ] Log in with owner@apexjov.test / owner123
+[ ] Create an Agency/Tenant and set the Agency Owner's login details
+[ ] Confirm Platform Owner does not see Add Team Member in tenant Settings
+[ ] Confirm Agency Management and Plans & Pricing remain Platform Owner-only
+
+AGENCY OWNER (demo login: admin@demo.test / admin123)
+[ ] Open Settings > Users & Permissions
+[ ] Add a Staff user and choose only required modules
+[ ] Add an Admin user and confirm only Agency Owner can assign this role
+[ ] Confirm newly created team member appears in the current agency only
+[ ] Try duplicate email and confirm it is rejected
+[ ] Try password shorter than 8 characters and confirm it is rejected
+[ ] Confirm Agency Owner cannot be modified from team permissions
+
+AGENCY ADMIN
+[ ] Log in as an Agency Admin
+[ ] Confirm Add Team Member offers Staff only
+[ ] Confirm an Admin cannot create another Admin or change the Agency Owner
+[ ] Assign/edit Staff module permissions and confirm selected modules persist in testing mode
+
+CUSTOMER / ISOLATION
+[ ] Add Customer from Customers module; do not create Customer via Team Members
+[ ] Create a second agency and confirm its owner/staff/customer records are not visible to the first agency
+[ ] Confirm Platform Owner remains the only role that can create/manage Agencies and Plans & Pricing
+
+REGRESSION
+[ ] Run npm run test:v77
+[ ] Run npm run test:isolation where PostgreSQL test environment is configured
+[ ] Manually re-test the existing V76 modules using V76_TESTING_CHECKLIST.txt

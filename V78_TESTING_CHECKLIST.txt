@@ -1,0 +1,10 @@
+APEXJOV MEDIA — V78 TEST CHECKLIST
+[ ] Run npm run test:v77 and existing V76 checks
+[ ] Invoice Due Date accepts 18/10/2026 and saves correctly
+[ ] Invalid date such as 31/02/2026 is rejected on invoice edit
+[ ] Invoice print/PDF shows DD/MM/YYYY
+[ ] Payment, Ledger, Expenses and Reports date displays use DD/MM/YYYY
+[ ] Platform Owner creates agency/owner; agency owner manages Admin/Staff hierarchy
+[ ] Staff permissions remain tenant-scoped
+[ ] Re-test all items in V76_TESTING_CHECKLIST.txt
+NOTE: Testing build only; do not use real customer data before full regression.

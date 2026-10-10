@@ -1,0 +1,23 @@
+{
+  "name": "klicto-portal-pg",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "start": "node src/server.js",
+    "test:isolation": "node test/isolation.test.js",
+    "test:v76": "node test/v76_consolidated_smoke.js",
+    "test:v77": "node test/v77_consolidated_smoke.js",
+    "test:static": "node test/static_training_smoke.js && node test/billing_static_smoke.js && node test/media_upload_static_smoke.js && node test/v70_crm_pipeline_static_smoke.js && node test/v76_consolidated_smoke.js && node test/v77_consolidated_smoke.js && node test/v80_footer_static_smoke.js && node test/payment_invoice_validation_static_smoke.js && node test/database_migrations_static_smoke.js && node test/online_login_static_smoke.js",
+    "test:syntax": "node --check src/server.js && node --check test/static_training_smoke.js && node --check test/billing_static_smoke.js && node --check test/media_upload_static_smoke.js && node --check test/payment_invoice_validation_static_smoke.js && node --check test/database_migrations_static_smoke.js && node --check test/online_login_static_smoke.js"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
+    "express": "^4.21.2",
+    "express-rate-limit": "^7.5.0",
+    "helmet": "^8.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "pg": "^8.16.3",
+    "paytmchecksum": "^1.5.0"
+  }
+}

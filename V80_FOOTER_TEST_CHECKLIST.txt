@@ -1,0 +1,13 @@
+KLICTO V80 FOOTER CHECKLIST
+
+[ ] Login as Platform Owner: footer visible at bottom
+[ ] Login as Agency Owner: footer visible at bottom
+[ ] Login as Admin: footer visible at bottom
+[ ] Login as Staff: footer visible at bottom
+[ ] Login as Customer: footer visible at bottom
+[ ] White-label agency account: footer visible with agency branding intact
+[ ] Mobile: footer visible and not covering buttons/forms
+[ ] Desktop: footer visible and not covering page content
+[ ] Print/PDF pages still show intended branding
+
+Testing package only; complete browser regression testing before production.

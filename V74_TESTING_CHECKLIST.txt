@@ -1,0 +1,62 @@
+APEXJOV MEDIA — V74 CONSOLIDATED TESTING CHECKLIST
+Use dummy data only. Do not use real customer data or real payments.
+
+A. PLATFORM OWNER
+[ ] Login as owner
+[ ] Create Agency A with unique name, admin email and temporary password
+[ ] Upload PNG/JPG/WebP logo (under 500 KB)
+[ ] Save, refresh, reopen agency; verify logo persists
+[ ] Edit branding and status
+[ ] Create Agency B for isolation testing
+
+B. AGENCY ADMIN / STAFF
+[ ] Login as Agency A admin
+[ ] Verify agency branding/name
+[ ] Add staff and assign role/permissions
+[ ] Confirm staff cannot access owner-only Agency Management
+[ ] Confirm staff/customer cannot access another agency's data
+
+C. CUSTOMER
+[ ] Add customer; verify only one contact/mobile field
+[ ] Set initial password; customer changes password
+[ ] Owner/admin password reset workflow
+[ ] Upload business logo and owner photo; save/reopen
+
+D. CRM / PIPELINES
+[ ] Select customer
+[ ] Select pipeline
+[ ] Confirm stage-wise counts
+[ ] Click stage and view leads
+[ ] Open lead details
+[ ] Change lead stage and confirm board/count updates
+[ ] Export filtered leads to Excel-compatible file
+[ ] Confirm Customer A cannot access Customer B leads
+
+E. FORMS / FUNNELS / WEBSITES
+[ ] Create/edit/save form
+[ ] Publish public link and submit dummy lead
+[ ] Verify lead appears in correct CRM/customer
+[ ] Edit website template and upload/replace image
+[ ] Preview on mobile and desktop
+[ ] Test external AI HTML/ZIP import with non-sensitive sample files
+[ ] Do not assume custom-domain/DNS/SSL is live
+
+F. BILLING / INTEGRATIONS
+[ ] Record cash/UPI/bank/manual payment
+[ ] Test partial payment and balance
+[ ] Test GST/non-GST invoice
+[ ] Check subscription expiry/suspension/reactivation behavior
+[ ] WhatsApp/payment-provider live tests only after credentials are configured
+
+G. REPORT
+For every issue: module, page, steps, expected result, actual result, device/browser, screenshot.
+Do not fix one-off issues during this pass; collect all issues for one consolidated update.
+
+
+H. RENTAL PLAN MANAGEMENT (V75)
+[ ] Login as Platform Owner → Agencies / Tenants → Manage Plans
+[ ] Edit plan name, price, cycle, user limit, WhatsApp quota and features
+[ ] Add a new plan and remove a plan
+[ ] Save, refresh and reopen to check browser-local persistence
+[ ] Create/edit an agency and confirm plan dropdown uses configured plans
+[ ] Note: staging localStorage only; not production database or automatic quota/payment enforcement
