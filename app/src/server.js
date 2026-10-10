@@ -55,10 +55,18 @@ async function migrateDatabase(){
     }
 console.log('Database ready');
     }
+async function auth(req, res, next) {
+  try {
+    const h = req.headers.authorization || '';
+    if (!h.startsWith('Bearer ')) return res.status(401).json({ error: 'Authentication required' });
+    req.user = jwt.verify(h.slice(7), SECRET);
+    next();
+  } catch (e) {
+    res.status(401).json({ error: 'Invalid or expired token' });
+  }
 
-    async function auth(req, res, next) {'});req.user=jwt.verify(h.slice(7),SECRET);next()}catch(e){res.status(401).json({error:'Invalid or expired session'})}}
-app.get('/api/auth/me',auth,async(req,res)=>{const u=await one('SELECT id,email,name,role,agency_id,customer_id,active,permissions FROM users WHERE id=$1',[req.user.id]);if(!u||!u.active)return res.status(401).json({error:'Account is inactive or unavailable'});res.json({user:{id:u.id,email:u.email,name:u.name,role:u.role,agency_id:u.agency_id,customer_id:u.customer_id},permissions:u.permissions||[]})});
-function allowed(u,module){return u.role==='platform_owner'||(u.permissions||[]).includes('*')||(u.permissions||[]).includes(module)}
+app.get('/api/auth/me', auth, async (req, res) => { const u = await one('SELECT id, email, name, role, agency_id, customer_id, active, permissions FROM users WHERE id=$1', [req.user.id]); if (!u || !u.active) return res.status(401).json({ error: 'User inactive' }); res.json({ ok: true, user: u }); });
+function allowed(u, module) { return u.role === 'platform_owner' || (u.permissions || []).includes('*') || (u.permissions || []).includes(module); }
 function customerScope(u,cid){return u.role==='customer'?Number(cid)===Number(u.customer_id):true}
 async function audit(req,action,entity,id,details={}){try{await q('INSERT INTO audit_logs(user_id,agency_id,action,entity,entity_id,details) VALUES($1,$2,$3,$4,$5,$6)',[req.user.id,req.user.agency_id||null,action,entity,id,details])}catch{}}
 app.get('/api/ready',async(req,res)=>{try{await q('SELECT 1');res.json({ok:true,service:'apexjov-api',database:'ready'})}catch(e){res.status(503).json({ok:false,database:'unavailable'})}});
