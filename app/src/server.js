@@ -300,5 +300,14 @@ app.post('/api/integrations/paytm/status',auth,async(req,res)=>{
 app.use((err,req,res,next)=>{console.error(err);if(res.headersSent)return next(err);res.status(500).json({error:'Internal server error'})});
 app.use(express.static(path.join(__dirname,'../public')));app.get('*',(req,res)=>res.sendFile(path.join(__dirname,'../public/index.html')));
 const port=Number(process.env.PORT||8080);
-async function start(){try{await migrateDatabase();await q('SELECT 1');app.listen(port,()=>console.log(`Klicto PostgreSQL backend listening on ${port}`));}catch(e){console.error('Startup blocked: database initialization failed.',e.message);process.exitCode=1;setTimeout(()=>process.exit(1),50);}}
+async function start() {
+  try {
+    await migrateDatabase();
+    await q('SELECT 1');
+    app.listen(port, () => console.log(Klicto PostgreSQL backend listening on ${port}));
+  } catch (err) {
+    console.error('Fatal startup error:', err);
+    process.exit(1);
+  }
+}
 start();
